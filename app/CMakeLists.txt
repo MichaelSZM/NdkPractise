@@ -21,6 +21,7 @@ add_library( # Sets the name of the library.
              src/main/cpp/com_example_michaelszm_ndkpractise_NdkCppInterface.cpp
              src/main/cpp/com_example_michaelszm_ndkpractise_NdkCppInterface.c
              src/main/cpp/ComPuter.cpp
+             src/main/cpp/bean/Company.cpp
               )
 
 # Searches for a specified prebuilt library and stores the path as a

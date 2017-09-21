@@ -30,5 +30,25 @@ public class NdkCppInterface {
 
     public native void cppClassTest();
 
+    /**
+     * 构造函数测试
+     */
+    public native void testConstructor();
+
+    /**
+     * 析构函数的练习
+     */
+    public native void testDestruct();
+
+    /**
+     * 函数的拷贝和赋值运算
+     */
+    public native void testCopyFunc();
+
+    /**
+     * c++中拷贝函数调用场景
+     */
+    public native void testCopyFuncScence();
+
 
 }

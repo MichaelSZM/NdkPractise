@@ -55,6 +55,38 @@ JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_f
 JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_cppClassTest
         (JNIEnv *, jobject);
 
+/*
+ * Class:     com_example_michaelszm_ndkpractise_NdkCppInterface
+ * Method:    testConstructor
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_testConstructor
+        (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_michaelszm_ndkpractise_NdkCppInterface
+ * Method:    testDestruct
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_testDestruct
+        (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_michaelszm_ndkpractise_NdkCppInterface
+ * Method:    testCopyFunc
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_testCopyFunc
+        (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_michaelszm_ndkpractise_NdkCppInterface
+ * Method:    testCopyFuncScence
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_testCopyFuncScence
+        (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

@@ -2,6 +2,7 @@
 // Created by michael$szm on 17/9/9.
 //
 #include <iostream>
+#include <malloc.h>
 #include "android/log.h"
 #include "com_example_michaelszm_ndkpractise_NdkCppInterface.h"
 
@@ -24,17 +25,17 @@ struct User{
 };
 
 void update_user(User ** pUser){
-    User *user = __mallocfunc(sizeof(User));
+    User *user = (User *) malloc(sizeof(User));
     user ->name = "MichaelSZM";
     user ->age = 23;
     *pUser = user;
 }
 
 void update_user(User * &pUser){
-    User *user = __mallocfunc(sizeof(User));
+    User *user = (User *) malloc(sizeof(User));
     user ->name = "Michael";
     user ->age = 23;
-    *pUser = user;
+    pUser = user;
 }
 
 
@@ -59,7 +60,7 @@ void const_init(){
 }
 
 
-struct Company{
+struct Company1{
     char * name;
     char * address;
     int age;
@@ -67,7 +68,7 @@ struct Company{
 
 
 
-void const_func_params(const Company &cp){
+void const_func_params(const Company1 &cp){
     //不能修改,只能读取
 //    cp .name = "jjj";
     __android_log_print(ANDROID_LOG_INFO,"main","公司名字 %s",cp.name);
@@ -136,7 +137,7 @@ int getMin(int a, int b){
 
 
 //函数指针别名
-typedef int(*GET_MIN_P)(int, int, int, int);
+typedef int(*GET_MIN_P)(int, int);
 
 JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_funcPointerTest
         (JNIEnv *env, jobject jobj){
@@ -147,7 +148,7 @@ JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_f
 
 
     GET_MIN_P p  = getMin;
-    int result = p(1,2,3,4);
+    int result = p(3,4);
     __android_log_print(ANDROID_LOG_INFO,"main","最小值:%d",result);
 }
 
@@ -168,3 +169,76 @@ JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_c
     cOmputer_p->setCpu("inter");
     __android_log_print(ANDROID_LOG_INFO,"main","name:%s,cpu:%s",cOmputer_p->getName(),cOmputer_p->getCpu());
 }
+
+
+#include "bean/Company.h"
+
+/**
+ * 构造方法练习
+ */
+JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_testConstructor
+        (JNIEnv * env, jobject jobj){
+
+    Company company1;
+    __android_log_print(ANDROID_LOG_INFO,"main","结果：%s",company1.toString());
+
+    Company company2("黄埔军校",50);
+    __android_log_print(ANDROID_LOG_INFO,"main","结果：%s",company2.toString());
+
+    Company company3 = Company("耶鲁大学",60);
+    __android_log_print(ANDROID_LOG_INFO,"main","结果：%s",company3.toString());
+
+}
+
+
+/**
+ * 析构函数练习
+ * 对象释放的时候触发
+ */
+JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_testDestruct
+        (JNIEnv * env, jobject jobj){
+    Company company1("tz",100);
+    __android_log_print(ANDROID_LOG_INFO,"main","结果：%s",company1.toString());
+
+    //new关键字创建的对象，需要手动调用析构函数
+    Company * company2 = new Company("xxxx",80);
+    company2->~Company();
+    __android_log_print(ANDROID_LOG_INFO,"main","结果：%s",company2->toString());
+}
+
+
+/**
+ * 拷贝函数练习
+ */
+JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_testCopyFunc
+        (JNIEnv * env, jobject jobj){
+    Company company1("tz",100);
+    Company company2 = company1;
+
+    Company company3("yyyy",20);
+    Company company4("mmmmm",30);
+    company4 = company3;
+}
+
+
+
+JNIEXPORT void JNICALL Java_com_example_michaelszm_ndkpractise_NdkCppInterface_testCopyFuncScence
+        (JNIEnv * env, jobject jobject1){
+
+    //1
+    Company company1("tz",100);
+    Company company2 = company1;
+
+    //2
+    Company company3("科大讯飞",80);
+    company3.workWithCompany(company1);
+
+    //3
+    Company company4(company1);
+
+}
+
+
+
+
+
